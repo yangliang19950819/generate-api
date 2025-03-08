@@ -1,4 +1,4 @@
-### api接口生产步骤
+### api接口生成步骤
 
 1. 执行yarn generate-api
 2. 选择生成api hook的类型
