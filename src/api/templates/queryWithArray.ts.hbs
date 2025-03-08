@@ -1,0 +1,47 @@
+import fetcher from "@/utils/fetcher";
+import { useQuery, type QueryParam } from "@/api/templates/type";
+import type { DefaultError } from "@tanstack/react-query";
+
+export const {{name}}Api = '{{url}}'
+
+export type {{pascalCase name}}Params = Record<string, unknown>;
+
+export type {{pascalCase name}}Data = null;
+
+export type {{pascalCase name}}Options = Partial<{{pascalCase name}}Params>
+
+export const {{name}}Key = (options: {{pascalCase name}}Options) => {
+    return [{{name}}Api, options] as const
+}
+
+export type Use{{pascalCase name}}Params<
+  SelectData = {{pascalCase name}}Data[],
+> = {{pascalCase name}}Options & QueryParam<
+  {{pascalCase name}}Data[],
+  DefaultError,
+  SelectData,
+  ReturnType<typeof {{name}}Key>
+>;
+
+/**
+* {{description}}
+*/
+
+export function use{{pascalCase name}}<
+  SelectData = {{pascalCase name}}Data[]
+>(
+  parameters: Use{{pascalCase name}}Params<SelectData> = {}
+) {
+  const { query = {}, ...rest } = parameters;
+  const { mutate, mutateAsync, ...result } = parameters;
+
+  return useQuery({
+    ...query,
+    queryKey: {{name}}Key(rest),
+    queryFn({ queryKey }){
+        return fetcher(queryKey[0],{
+            body: queryKey[1]
+        })
+    }
+  })
+}

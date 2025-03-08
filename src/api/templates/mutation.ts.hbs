@@ -1,0 +1,44 @@
+import fetcher from "@/utils/fetcher";
+import { useMutation } from "@tanstack/react-query";
+import type { DefaultError } from "@tanstack/react-query";
+import type { UseMutationParameters } from '@/api/templates/type'
+
+export const {{name}}Api = '{{url}}'
+
+export type {{pascalCase name}}Params = Record<string, unknown>;
+  
+export type {{pascalCase name}}Data = null;
+
+export interface Use{{pascalCase name}}Params<Context = unknown>{
+    mutation?: UseMutationParameters<
+        {{pascalCase name}}Data,
+        DefaultError,
+        {{pascalCase name}}Params,
+        Context
+    > | undefined    
+};
+
+/**
+* {{description}}
+*/
+
+export function use{{pascalCase name}}<Context = unknown>(
+  parameters: Use{{pascalCase name}}Params<Context> = {}
+) {
+  const { mutation } = parameters;
+  const { mutate, mutateAsync, ...result } = useMutation({
+    ...mutation,
+    mutationKey: [{{name}}Api],
+    mutationFn(variables){
+        return fetcher({{name}}Api, {
+            body: variables
+        })
+    }
+  });
+
+  return {
+    ...result,
+    {{name}}: mutate,
+    {{name}}Async: mutateAsync
+  }
+}

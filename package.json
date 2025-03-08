@@ -1,0 +1,25 @@
+{
+  "name": "api",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "jiong",
+  "license": "MIT",
+  "scripts": {
+    "prepare": "husky",
+    "generate-api": "plop"
+  },
+  "lint-staged": {
+    "**/*": "prettier --write --ignore-unknown"
+  },
+  "devDependencies": {
+    "husky": "^9.1.7",
+    "lint-staged": "^15.4.3",
+    "plop": "^4.0.1",
+    "prettier": "3.5.2",
+    "yapi-to-typescript": "^3.38.0"
+  },
+  "dependencies": {
+    "@tanstack/react-query": "^5.66.9",
+    "lodash-es": "^4.17.21"
+  }
+}
